@@ -1,5 +1,5 @@
 import pygame as pg
-import time
+
 pg.font.init()
 
 WHITE = (255, 255, 255)

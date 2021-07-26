@@ -3,6 +3,7 @@ from Board import Board
 import pygame as pg
 import sys
 sys.path.append(".")
+pg.font.init()
 
 WHITE = (255, 255, 255)
 
@@ -13,7 +14,7 @@ def redraw_window(win, board):
 
 
 def main():
-    win = pg.display.set_mode((540, 600))
+    win = pg.display.set_mode((540, 540))
     pg.display.set_caption("TicTacToe")
     board = Board(3, 3, 540, 540)
     key = "X"
@@ -27,12 +28,6 @@ def main():
             if event.type == pg.QUIT:
                 run = False
             if event.type == pg.KEYDOWN:
-                if XO == "X":
-                    XO = "O"
-                    key = "O"
-                else:
-                    XO = "X"
-                    key = "X"
 
                 if event.key == pg.K_RETURN:
                     i, j = board.selected
@@ -42,14 +37,19 @@ def main():
                         else:
                             print("Fail")
 
+                        if board.has_won():
+                            print(key + " Wins!")
+                            run = False
+
                         if board.is_finished():
                             print("Game Over")
                             run = False
-                        if board.has_won():
-                            fnt = pg.font.SysFont("comicsans", 40)
-                            text = fnt.render(XO + "Won!", 1, (255, 255, 255))
-                            win.blit(text, (20, 560))
-                            board.draw(win)
+                if XO == "X":
+                    XO = "O"
+                    key = "O"
+                else:
+                    XO = "X"
+                    key = "X"
 
             if event.type == pg.MOUSEBUTTONDOWN:
                 pos = pg.mouse.get_pos()
